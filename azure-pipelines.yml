@@ -35,7 +35,7 @@ steps:
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: 'WSB'
-    subscriptionId: 'c0fd6f78-2fed-4044-a2c3-c7403492b99e'
+    subscriptionId: 'podstawic swoje'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'WSB2022'
     location: 'West Europe'

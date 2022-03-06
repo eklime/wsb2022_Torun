@@ -13,14 +13,19 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- task: AzureResourceManagerTemplateDeployment@3
+#- task: AzureResourceManagerTemplateDeployment@3
+#  inputs:
+#    deploymentScope: 'Resource Group'
+#    azureResourceManagerConnection: 'WSB'
+#    subscriptionId: 'c0fd6f78-2fed-4044-a2c3-c7403492b99e'
+#    action: 'Create Or Update Resource Group'
+#    resourceGroupName: 'WSB2022'
+#    location: 'West Europe'
+#    templateLocation: 'URL of the file'
+- task: AzureCLI@2
   inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'WSB'
-    subscriptionId: 'c0fd6f78-2fed-4044-a2c3-c7403492b99e'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'WSB2022'
-    location: 'West Europe'
-    templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/eklime/wsb2022_Torun/main/Storage/main.bicep'
-    deploymentMode: 'Incremental'
+    azureSubscription: 'WSB'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az deployment group create -n Storage -g WSB2022 -u https://raw.githubusercontent.com/eklime/wsb2022_Torun/main/Storage/main.bicep'
+

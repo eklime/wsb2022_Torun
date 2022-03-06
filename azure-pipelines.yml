@@ -30,19 +30,24 @@ steps:
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
     inlineScript: 'az bicep build --file $(System.ArtifactsDirectory)\bicep\Storage\main.bicep'
-#- task: AzureResourceManagerTemplateDeployment@3
-#  inputs:
-#    deploymentScope: 'Resource Group'
-#    azureResourceManagerConnection: 'WSB'
-#    subscriptionId: 'c0fd6f78-2fed-4044-a2c3-c7403492b99e'
-#    action: 'Create Or Update Resource Group'
-#    resourceGroupName: 'WSB2022'
-#    location: 'West Europe'
-#    templateLocation: 'URL of the file'
-- task: AzureCLI@2
+
+- task: AzureResourceManagerTemplateDeployment@3
   inputs:
-    azureSubscription: 'WSB'
-    scriptType: 'ps'
-    scriptLocation: 'inlineScript'
-    inlineScript: 'az deployment group create -n Storage -g WSB2022 -f $(System.ArtifactsDirectory)\bicep\Storage\main.json --parameters stgName=kjdsfsdhfg7856h'
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'WSB'
+    subscriptionId: 'c0fd6f78-2fed-4044-a2c3-c7403492b99e'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'WSB2022'
+    location: 'West Europe'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(System.ArtifactsDirectory)\bicep\Storage\main.json'
+    overrideParameters: '-stgName jdsfhdsufhg57656'
+    deploymentMode: 'Complete'
+
+#- task: AzureCLI@2
+#  inputs:
+#    azureSubscription: 'WSB'
+#    scriptType: 'ps'
+#    scriptLocation: 'inlineScript'
+#   inlineScript: 'az deployment group create -n Storage -g WSB2022 -f $(System.ArtifactsDirectory)\bicep\Storage\main.json --parameters stgName=kjdsfsdhfg7856h'
 

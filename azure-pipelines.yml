@@ -13,6 +13,23 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
+- task: PublishPipelineArtifact@1
+ inputs:
+    targetPath: '$(Build.Repository.LocalPath)'
+    artifactName: BICEP
+
+- task: DownloadPipelineArtifact@2
+  inputs:
+    source: current
+    artifact: BICEP
+    downloadPath: $(System.ArtifactsDirectory)/bicep
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'WSB'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az bicep build --file $(System.ArtifactsDirectory)/bicep/Storage/main.bicep'
 #- task: AzureResourceManagerTemplateDeployment@3
 #  inputs:
 #    deploymentScope: 'Resource Group'
@@ -27,5 +44,5 @@ steps:
     azureSubscription: 'WSB'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az deployment group create -n Storage -g WSB2022 -u https://raw.githubusercontent.com/eklime/wsb2022_Torun/main/Storage/main.bicep'
+    inlineScript: 'az deployment group create -n Storage -g WSB2022 -u $(System.ArtifactsDirectory)/bicep/Storage/main.json'
 

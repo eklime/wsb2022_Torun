@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "createdOn": {
+      "type": "string",
+      "defaultValue": "[utcNow()]"
+    },
+    "storageName": {
+      "type": "string",
+      "defaultValue": "[format('wsbstg1{0}', uniqueString(resourceGroup().id))]",
+      "maxLength": 24,
+      "minLength": 3,
+      "metadata": {
+        "description": "Podaj nazwę konta storage lub zostaw puste - nazwa zostanie wygenerowana automatycznie"
+      }
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2021-06-01",
+      "name": "[toLower(parameters('storageName'))]",
+      "location": "[parameters('location')]",
+      "kind": "StorageV2",
+      "properties": {
+        "supportsHttpsTrafficOnly": true,
+        "allowBlobPublicAccess": true,
+        "minimumTlsVersion": "TLS1_2",
+        "accessTier": "Hot",
+        "networkAcls": {
+          "defaultAction": "Allow",
+          "bypass": "AzureServices",
+          "virtualNetworkRules": [],
+          "ipRules": []
+        }
+      },
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "tags": {
+        "Created": "[parameters('createdOn')]"
+      }
+    }
+  ]
+}

@@ -13,7 +13,14 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'WSB'
+    subscriptionId: 'c0fd6f78-2fed-4044-a2c3-c7403492b99e'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'WSB2022'
+    location: 'West Europe'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/eklime/wsb2022_Torun/main/Storage/main.bicep'
+    deploymentMode: 'Incremental'

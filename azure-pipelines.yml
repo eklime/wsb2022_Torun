@@ -22,7 +22,7 @@ steps:
   inputs:
     source: current
     artifact: BICEP
-    downloadPath: $(System.ArtifactsDirectory)/bicep
+    downloadPath: $(System.ArtifactsDirectory)\bicep
 
 - task: AzureCLI@2
   inputs:

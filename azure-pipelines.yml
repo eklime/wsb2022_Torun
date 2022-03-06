@@ -44,5 +44,5 @@ steps:
     azureSubscription: 'WSB'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az deployment group create -n Storage -g WSB2022 -u $(System.ArtifactsDirectory)\bicep\Storage\main.json'
+    inlineScript: 'az deployment group create -n Storage -g WSB2022 -f $(System.ArtifactsDirectory)\bicep\Storage\main.json'
 
